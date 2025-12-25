@@ -104,8 +104,6 @@ const App: React.FC = () => {
     if (loaded) return {}; // Revert to CSS classes when loaded
     
     // Smooth easing for opacity/glow
-    // 0% -> very dim
-    // 100% -> bright
     const p = Math.max(0, progress);
     const opacity = 0.2 + (p / 100) * 0.8; 
     const blurRadius = (p / 100) * 20; // 0 to 20px blur
@@ -182,7 +180,6 @@ const App: React.FC = () => {
 
       <Canvas 
         dpr={[1, 2]} 
-        // Enable alpha so the CSS background gradient is visible
         gl={{ antialias: true, alpha: true }}
       >
         <Suspense fallback={null}>
@@ -198,10 +195,6 @@ const App: React.FC = () => {
 
       {/* 
         UI Overlay - Neon Sign Title & Loading Screen Combined 
-        Transitions from Center (Loading) to Top-Left (Title)
-        
-        Using inline style for transform to ensure correct CSS calc() syntax (spaces are required around operators).
-        This fixes the issue where Tailwind's arbitrary value calc() might be invalid, causing the element to default to top-left.
       */}
       <div 
         className="absolute top-0 left-0 z-50 transition-transform duration-1000 ease-in-out origin-center"
@@ -213,10 +206,9 @@ const App: React.FC = () => {
       >
         <div 
             className="relative p-6 rounded-3xl border-4 border-cyan-200/50 bg-black/70 backdrop-blur-md neon-border transform -rotate-2 shadow-2xl transition-all duration-700"
-            // Ensure opacity is 1 during load to hide the scene building, then respect atmosphere mode
             style={{ opacity: !loaded ? 1 : (isAtmosphereMode ? 1 : 0.3) }}
         >
-            {/* Hanging Wires - only visible when mounted on wall */}
+            {/* Hanging Wires */}
             <div className={`absolute -top-20 left-10 w-0.5 h-20 bg-gray-700/50 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>
             <div className={`absolute -top-20 right-10 w-0.5 h-20 bg-gray-700/50 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>
 
@@ -243,7 +235,6 @@ const App: React.FC = () => {
                 >
                     Christmas
                 </span>
-                {/* Year displays when loaded, percentage when loading */}
                 <span 
                     className={`text-5xl mt-1 drop-shadow-lg ${loaded ? 'neon-gold' : ''}`}
                     style={getLoadingStyle('#f59e0b')}
@@ -252,15 +243,13 @@ const App: React.FC = () => {
                 </span>
             </div>
             
-            {/* Subtle reflection shine */}
             <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent rounded-t-2xl pointer-events-none"></div>
         </div>
       </div>
 
-      {/* Control Center: Bottom Left - Hidden during load */}
+      {/* Control Center: Bottom Left */}
       <div className={`absolute bottom-8 left-8 z-30 pointer-events-auto flex flex-col items-start gap-3 transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         
-        {/* Collapsible Panel */}
         <div 
             className={`
                 bg-black/30 backdrop-blur-md p-4 rounded-xl border border-white/10 w-64 
@@ -268,7 +257,6 @@ const App: React.FC = () => {
                 ${isAtmosphereMode ? 'opacity-0 scale-90 max-h-0 py-0 mb-0 border-none' : 'opacity-100 scale-100 max-h-[500px] mb-2'}
             `}
         >
-            {/* Toggles */}
             <div className="mb-6 flex flex-col gap-1">
                 <ToggleSwitch label="Let it Snow" checked={showSnow} onChange={setShowSnow} />
                 <ToggleSwitch label="Gifts" checked={showGifts} onChange={setShowGifts} />
@@ -276,7 +264,6 @@ const App: React.FC = () => {
                 <ToggleSwitch label="Golden Bells" checked={showBells} onChange={setShowBells} />
             </div>
 
-            {/* Speed Slider */}
             <div>
                 <label className="text-white/50 text-xs font-bold tracking-widest uppercase mb-3 block">
                     Rotation Speed
@@ -299,24 +286,17 @@ const App: React.FC = () => {
             </div>
         </div>
 
-        {/* Snowman Toggle Button */}
         <div className="pl-2">
             <SnowmanToggle active={isAtmosphereMode} onClick={() => setIsAtmosphereMode(!isAtmosphereMode)} />
         </div>
       </div>
 
-      {/* 
-        Hint Text
-      */}
+      {/* Hint Text */}
       <div className={`absolute bottom-8 right-8 pointer-events-none text-right transition-opacity duration-700 ${isAtmosphereMode || !loaded ? 'opacity-0' : 'opacity-100'}`}>
         <p className="text-white/30 text-xs tracking-widest uppercase">
           Drag to Rotate &bull; Scroll to Zoom
         </p>
       </div>
-
-       {/* Decorative Corners */}
-       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-       <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-white/5 to-transparent pointer-events-none" />
     </div>
   );
 };
