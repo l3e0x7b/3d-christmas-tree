@@ -127,6 +127,11 @@ const App: React.FC = () => {
             opacity: 0.4;
           }
         }
+
+        @keyframes wire-pulse {
+          0%, 100% { opacity: 1; box-shadow: 0 0 10px #00f3ff, 0 0 5px #fff; }
+          50% { opacity: 0.7; box-shadow: 0 0 15px #00f3ff, 0 0 8px #fff; }
+        }
         
         .font-christmas {
           font-family: 'Mountains of Christmas', cursive;
@@ -171,6 +176,11 @@ const App: React.FC = () => {
                 inset 0 0 10px #00f3ff;
             border-color: #a5f3fc;
         }
+
+        .neon-wire {
+            background: linear-gradient(to bottom, transparent, #00f3ff 20%, #fff 50%, #00f3ff 80%);
+            animation: wire-pulse 4s infinite ease-in-out;
+        }
       `}</style>
 
       {/* 
@@ -208,9 +218,9 @@ const App: React.FC = () => {
             className="relative p-6 rounded-3xl border-4 border-cyan-200/50 bg-black/70 backdrop-blur-md neon-border transform -rotate-2 shadow-2xl transition-all duration-700"
             style={{ opacity: !loaded ? 1 : (isAtmosphereMode ? 1 : 0.3) }}
         >
-            {/* Hanging Wires */}
-            <div className={`absolute -top-20 left-10 w-0.5 h-20 bg-gray-700/50 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>
-            <div className={`absolute -top-20 right-10 w-0.5 h-20 bg-gray-700/50 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>
+            {/* Hanging Neon Wires (Luminous Sources) */}
+            <div className={`absolute -top-[100vh] left-10 w-0.5 h-[100vh] neon-wire transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>
+            <div className={`absolute -top-[100vh] right-10 w-0.5 h-[100vh] neon-wire transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>
 
             <div className="flex flex-col items-center justify-center font-christmas font-bold tracking-wider leading-none">
                 <div className="flex items-center gap-4">
