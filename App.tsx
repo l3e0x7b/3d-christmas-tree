@@ -216,7 +216,7 @@ const App: React.FC = () => {
       >
         <div 
             className="relative p-6 rounded-3xl border-4 border-cyan-200/50 bg-black/70 backdrop-blur-md neon-border transform -rotate-2 shadow-2xl transition-all duration-700"
-            style={{ opacity: !loaded ? 1 : (isAtmosphereMode ? 1 : 0.3) }}
+            style={{ opacity: 1 }}
         >
             {/* Hanging Neon Wires (Luminous Sources) */}
             <div className={`absolute -top-[100vh] left-10 w-0.5 h-[100vh] neon-wire transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}></div>

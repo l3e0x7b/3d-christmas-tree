@@ -17,7 +17,6 @@ interface SceneProps {
 const Scene: React.FC<SceneProps> = ({ speed, showGifts, showStockings, showBells, showSnow }) => {
   return (
     <>
-      {/* Moved camera back from z:18 to z:25 and up slightly to y:3 to frame the gifts better */}
       <PerspectiveCamera makeDefault position={[0, 3, 25]} fov={50} />
       <OrbitControls 
         enablePan={false} 
@@ -26,22 +25,17 @@ const Scene: React.FC<SceneProps> = ({ speed, showGifts, showStockings, showBell
         minDistance={8}
         maxDistance={40}
         autoRotate
-        // Base max speed is 0.5, scaled by the slider value (0 to 1)
         autoRotateSpeed={0.5 * speed}
       />
 
-      {/* 'lobby' provides warm interior reflections perfect for metallic baubles */}
       <TextureEnvironment preset="lobby" background={false} />
 
       <ambientLight intensity={0.4} />
       
-      {/* Warmer main light - Increased intensity for better highlights */}
       <pointLight position={[10, 10, 10]} intensity={2.0} color="#fff7ed" />
       
-      {/* Cooler fill light - Increased for volume definition */}
       <pointLight position={[-10, 5, -10]} intensity={0.8} color="#1e40af" />
       
-      {/* Strong top-down spot light to catch the edges of baubles and tinsel */}
       <spotLight 
         position={[0, 15, 0]} 
         intensity={2.5} 
@@ -60,11 +54,11 @@ const Scene: React.FC<SceneProps> = ({ speed, showGifts, showStockings, showBell
             showBells={showBells}
         />
         <TopStar speed={speed} />
-        {/* Gifts placed at the base, now rotating with the tree. Visibility controlled by prop. */}
         <Gifts speed={speed} visible={showGifts} />
       </group>
       
-      {/* Background Particles/Stars */}
+      {/* 移除了 Room 背景与墙面挂灯 */}
+      
       <Environment showSnow={showSnow} />
     </>
   );
